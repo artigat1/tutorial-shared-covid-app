@@ -1,10 +1,12 @@
 import Viewport from '../../../node_modules/neo.mjs/src/container/Viewport.mjs'
-import {default as TabContainer} from '../../../node_modules/neo.mjs/src/tab/Container.mjs';
+import { default as TabContainer } from '../../../node_modules/neo.mjs/src/tab/Container.mjs'
 
-import CountryTable from './country/Table.mjs';
-import HeaderContainer from './HeaderContainer.mjs'
-import MainContainerController from './MainContainerController.mjs'
+import CountryTable from './country/Table.mjs'
 import FooterContainer from './FooterContainer.mjs'
+import GalleryContainer          from './GalleryContainer.mjs';
+import HeaderContainer from './HeaderContainer.mjs'
+import HelixContainer from './HelixContainer.mjs'
+import MainContainerController from './MainContainerController.mjs'
 
 /**
  * @class Covid.view.MainContainer
@@ -26,30 +28,42 @@ class MainContainer extends Viewport {
             },
 
             items: [
-                { module: HeaderContainer, height: 120 },
+                {
+                    module: HeaderContainer,
+                    height: 120
+                },
                 {
                     module: TabContainer,
-                    flex     : 1,
+                    flex: 1,
                     reference: 'tab-container',
-                    style    : {margin: '10px', marginTop: 0},
+                    style: {
+                        margin: '10px',
+                        marginTop: 0
+                    },
 
                     items: [{
-                        module   : CountryTable,
-                        reference: 'table-container',
+                        module: CountryTable,
+                        reference: 'table',
 
                         tabButtonConfig: {
                             iconCls: 'fa fa-table',
-                            route  : 'mainview=table',
-                            text   : 'Table'
+                            route: 'mainview=table',
+                            text: 'Table'
                         }
                     }, {
-                        ntype: 'component',
-                        html : 'Tab 2',
+                        module: HelixContainer,
 
                         tabButtonConfig: {
                             iconCls: 'fa fa-dna',
-                            route  : 'mainview=helix',
-                            text   : 'Helix'
+                            route: 'mainview=helix',
+                            text: 'Helix'
+                        }
+                    }, {
+                        module         : GalleryContainer,
+                        tabButtonConfig: {
+                            iconCls: 'fa fa-images',
+                            route  : 'mainview=gallery',
+                            text   : 'Gallery'
                         }
                     }]
                 },
