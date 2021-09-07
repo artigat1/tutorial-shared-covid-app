@@ -1,9 +1,9 @@
-import MainContainer from './view/MainContainer.mjs';
+import MainContainer from './view/MainContainer.mjs'
 
 const onStart = () => Neo.app({
-    appPath : 'apps/covid/',
+    appPath: 'apps/covid/',
     mainView: MainContainer,
-    name    : 'Covid'
-});
+    name: 'Covid'
+})
 
-export {onStart as onStart};
+export { onStart as onStart }

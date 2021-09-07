@@ -1,79 +1,81 @@
-import Base       from '../../../../node_modules/neo.mjs/src/list/Base.mjs';
-import Collection from '../../../../node_modules/neo.mjs/src/collection/Base.mjs';
+import Base from '../../../../node_modules/neo.mjs/src/list/Base.mjs'
+import Collection from '../../../../node_modules/neo.mjs/src/collection/Base.mjs'
 
 /**
  * @class Docs.view.classdetails.MembersList
  * @extends Neo.list.Base
  */
 class MembersList extends Base {
-    static getConfig() {return {
-        /**
-         * @member {String} className='Docs.view.classdetails.MembersList'
-         * @protected
-         */
-        className: 'Docs.view.classdetails.MembersList',
-        /**
-         * @member {String} ntype='classdetails-memberslist'
-         * @protected
-         */
-        ntype: 'classdetails-memberslist',
-        /**
-         * @member {String[]} cls=['docs-classhierarchy-memberslist']
-         */
-        cls: ['docs-classhierarchy-memberslist'],
-        /**
-         * @member {String} filterMembersQuery_=''
-         * @protected
-         */
-        filterMembersQuery_: '',
-        /**
-         * @member {Boolean} showPrivateMembers_=true
-         */
-        showPrivateMembers_: true,
-        /**
-         * @member {Boolean} showProtectedMembers_=true
-         */
-        showProtectedMembers_: true,
-        /**
-         * @member {Boolean} showStaticMembers_=true
-         */
-        showStaticMembers_: true,
-        /**
-         * @member {Neo.collection.Base} store=null
-         */
-        store: null,
-        /**
-         * @member {String|null} targetClassName=null
-         */
-        targetClassName: null,
-        /**
-         * @member {Object} _vdom={cn: []}
-         */
-        _vdom:
-        {cn: []}
-    }}
+    static getConfig() {
+        return {
+            /**
+             * @member {String} className='Docs.view.classdetails.MembersList'
+             * @protected
+             */
+            className: 'Docs.view.classdetails.MembersList',
+            /**
+             * @member {String} ntype='classdetails-memberslist'
+             * @protected
+             */
+            ntype: 'classdetails-memberslist',
+            /**
+             * @member {String[]} cls=['docs-classhierarchy-memberslist']
+             */
+            cls: ['docs-classhierarchy-memberslist'],
+            /**
+             * @member {String} filterMembersQuery_=''
+             * @protected
+             */
+            filterMembersQuery_: '',
+            /**
+             * @member {Boolean} showPrivateMembers_=true
+             */
+            showPrivateMembers_: true,
+            /**
+             * @member {Boolean} showProtectedMembers_=true
+             */
+            showProtectedMembers_: true,
+            /**
+             * @member {Boolean} showStaticMembers_=true
+             */
+            showStaticMembers_: true,
+            /**
+             * @member {Neo.collection.Base} store=null
+             */
+            store: null,
+            /**
+             * @member {String|null} targetClassName=null
+             */
+            targetClassName: null,
+            /**
+             * @member {Object} _vdom={cn: []}
+             */
+            _vdom:
+                { cn: [] }
+        }
+    }
 
     /**
      *
      */
     onConstructed() {
-        super.onConstructed();
+        super.onConstructed()
 
-        let me            = this,
+        let me = this,
             hierarchyView = me.up('classdetails-maincontainer').down('classhierarchy-treelist'),
-            mainStore     = me.up('main-container').store;
+            mainStore = me.up('main-container').store
 
         hierarchyView.on({
             refreshClassMembers: me.onRefreshClassMembers,
-            scope              : me
-        });
+            scope: me
+        })
 
         me.store = Neo.create(Collection, {
             filterMode: 'advanced',
-            sourceId  : mainStore.id
-        });
+            sourceId: mainStore.id
+        })
 
-        me.onRefreshClassMembers();
+        me.onRefreshClassMembers()
     }
 
     /**
@@ -84,7 +86,7 @@ class MembersList extends Base {
      */
     afterSetFilterMembersQuery(value, oldValue) {
         if (oldValue !== undefined) {
-            this.onRefreshClassMembers();
+            this.onRefreshClassMembers()
         }
     }
 
@@ -96,7 +98,7 @@ class MembersList extends Base {
      */
     afterSetShowProtectedMembers(value, oldValue) {
         if (oldValue !== undefined) {
-            this.onRefreshClassMembers();
+            this.onRefreshClassMembers()
         }
     }
 
@@ -108,7 +110,7 @@ class MembersList extends Base {
      */
     afterSetShowPrivateMembers(value, oldValue) {
         if (oldValue !== undefined) {
-            this.onRefreshClassMembers();
+            this.onRefreshClassMembers()
         }
     }
 
@@ -120,7 +122,7 @@ class MembersList extends Base {
      */
     afterSetShowStaticMembers(value, oldValue) {
         if (oldValue !== undefined) {
-            this.onRefreshClassMembers();
+            this.onRefreshClassMembers()
         }
     }
 
@@ -135,13 +137,13 @@ class MembersList extends Base {
             vdom.cn.push({
                 // scrolling placeholder
             }, {
-                cls      : ['neo-docs-memberlist-group-header'],
+                cls: ['neo-docs-memberlist-group-header'],
                 innerHTML: 'Configs',
                 'data-list-header': 'Configs'
-            });
+            })
         }
 
-        return vdom;
+        return vdom
     }
 
     /**
@@ -155,19 +157,19 @@ class MembersList extends Base {
     applyEventsHeader(item, index, store, vdom) {
         if (
             item.kind === 'event' &&
-            store.items[index -1]?.kind !== 'event'
+            store.items[index - 1]?.kind !== 'event'
         ) {
             vdom.cn.push({
                 // scrolling placeholder
             }, {
-                cls      : ['neo-docs-memberlist-group-header'],
+                cls: ['neo-docs-memberlist-group-header'],
                 innerHTML: 'Events',
-                style    : {zIndex: 3},
+                style: { zIndex: 3 },
                 'data-list-header': 'Events'
-            });
+            })
         }
 
-        return vdom;
+        return vdom
     }
 
     /**
@@ -182,74 +184,74 @@ class MembersList extends Base {
         if (
             item.kind === 'function' &&
             (
-                !store.items[index -1] || (
-                    store.items[index -1]?.kind !== 'function'
+                !store.items[index - 1] || (
+                    store.items[index - 1]?.kind !== 'function'
                 )
             )
         ) {
             vdom.cn.push({
                 // scrolling placeholder
             }, {
-                cls      : ['neo-docs-memberlist-group-header'],
+                cls: ['neo-docs-memberlist-group-header'],
                 innerHTML: 'Methods',
-                style    : {zIndex: 2},
+                style: { zIndex: 2 },
                 'data-list-header': 'Methods'
-            });
+            })
         }
 
-        return vdom;
+        return vdom
     }
 
     /**
      *
      */
     createItems() {
-        let me                 = this,
+        let me = this,
             filterMembersRegEx = new RegExp(me.filterMembersQuery || '', 'gi'),
-            hasExamples        = false,
-            targetClassName    = me.targetClassName,
-            vdom               = me.vdom,
-            headerText, itemAttributes, itemConfig, path;
+            hasExamples = false,
+            targetClassName = me.targetClassName,
+            vdom = me.vdom,
+            headerText, itemAttributes, itemConfig, path
 
-        vdom.cn = [];
-        vdom = me.applyConfigsHeader(me.store, vdom);
+        vdom.cn = []
+        vdom = me.applyConfigsHeader(me.store, vdom)
 
         me.store.items.forEach((item, index) => {
-            vdom = me.applyEventsHeader( item, index, me.store, vdom);
-            vdom = me.applyMethodsHeader(item, index, me.store, vdom);
+            vdom = me.applyEventsHeader(item, index, me.store, vdom)
+            vdom = me.applyMethodsHeader(item, index, me.store, vdom)
 
-            itemAttributes = [];
+            itemAttributes = []
 
             if (item.name.substr(-1) === '_') {
-                item.name = item.name.slice(0, -1) ;
-                itemAttributes.push('GS');
+                item.name = item.name.slice(0, -1)
+                itemAttributes.push('GS')
             }
 
             if (item.neoClassName !== targetClassName) {
-                itemAttributes.push('inherited');
+                itemAttributes.push('inherited')
             }
 
             if (item.access === 'private' || item.access === 'protected') {
-                itemAttributes.push(item.access);
+                itemAttributes.push(item.access)
             }
 
             if (item.scope === 'static') {
-                itemAttributes.push('static');
+                itemAttributes.push('static')
             }
 
-            headerText = item.name;
+            headerText = item.name
 
             if (me.filterMembersQuery !== '' && me.filterMembersQuery !== null) {
-                headerText = headerText.replace(filterMembersRegEx, match => `<span class="neo-highlight-search">${match}</span>`);
+                headerText = headerText.replace(filterMembersRegEx, match => `<span class="neo-highlight-search">${ match }</span>`)
             }
 
             // configs
             if (item.type?.names) {
-                headerText += (': {' + MembersList.escapeHtml(item.type.names.join('|')) + '}');
+                headerText += (': {' + MembersList.escapeHtml(item.type.names.join('|')) + '}')
             }
 
             if (item.hasOwnProperty('defaultvalue')) {
-                headerText += (' = ' + item.defaultvalue);
+                headerText += (' = ' + item.defaultvalue)
             }
 
             // methods
@@ -257,90 +259,90 @@ class MembersList extends Base {
                 headerText += ('(' + item.params.reduce((result, param) => {
                     if (param.name.indexOf('.') < 0) {
                         if (param.optional) {
-                            result.push('[' + param.name + ']');
+                            result.push('[' + param.name + ']')
                         } else {
-                            result.push(param.name);
+                            result.push(param.name)
                         }
                     }
-                    return result;
-                }, []).join(', ') + ')');
+                    return result
+                }, []).join(', ') + ')')
             }
 
             if (item.returns) {
-                headerText += (' → {' + MembersList.escapeHtml(item.returns[0].type.names.join('|') + '}'));
+                headerText += (' → {' + MembersList.escapeHtml(item.returns[0].type.names.join('|') + '}'))
             }
 
-            path = item.meta.path;
+            path = item.meta.path
 
             if (path.includes('/neo.mjs/')) {
-                path = path.substr(path.indexOf('/neo.mjs/') + 9);
+                path = path.substr(path.indexOf('/neo.mjs/') + 9)
             } else if (path.includes('/neomjs/')) {
-                path = path.substr(path.indexOf('/neomjs/')  + 8);
+                path = path.substr(path.indexOf('/neomjs/') + 8)
             } else if (path.includes('/neo/')) {
-                path = path.substr(path.indexOf('/neo/')     + 5);
+                path = path.substr(path.indexOf('/neo/') + 5)
             }
 
             itemConfig = {
                 cls: ['neo-list-item'],
-                cn : [{
+                cn: [{
                     cls: ['neo-list-item-header-container'],
-                    cn : [{
-                        cls      : ['neo-list-item-header'],
+                    cn: [{
+                        cls: ['neo-list-item-header'],
                         innerHTML: headerText
                     }, {
                         style: {
                             flex: 1
                         }
                     }, {
-                        cls      : ['neo-list-item-header'],
+                        cls: ['neo-list-item-header'],
                         innerHTML: itemAttributes.join(', ')
                     }]
                 }, {
                     cls: 'neo-docs-view-source-link-container',
-                    cn :[{
-                        tag      : 'a',
-                        cls      : ['neo-docs-view-source-link'],
-                        href     : '#viewSource=' + item.neoClassName + '&line=' + item.meta.lineno,
+                    cn: [{
+                        tag: 'a',
+                        cls: ['neo-docs-view-source-link'],
+                        href: '#viewSource=' + item.neoClassName + '&line=' + item.meta.lineno,
                         innerHTML: 'Source: ' + path + '/' + item.meta.filename + ' (Line ' + item.meta.lineno + ')'
                     }]
                 }, {
                     innerHTML: item.description
                 }]
-            };
+            }
 
             if (item.examples?.length > 0) {
-                hasExamples = true;
+                hasExamples = true
 
                 item.examples.forEach(example => {
                     itemConfig.cn.push({
                         tag: 'pre',
-                        cn : [{
-                            tag : 'code',
+                        cn: [{
+                            tag: 'code',
                             html: example
                         }]
-                    });
-                });
+                    })
+                })
             }
 
             if (item.params?.length > 0) {
-                itemConfig.cn.push(MembersList.createParametersTable(item.params));
+                itemConfig.cn.push(MembersList.createParametersTable(item.params))
             }
 
             if (item.returns && item.kind !== 'event') {
                 itemConfig.cn.push({
                     innerHTML: 'Returns {' + MembersList.escapeHtml(item.returns[0].type.names.join('|') + '} ') + (item.returns[0].description || '')
-                });
+                })
             }
 
-            vdom.cn.push(itemConfig);
-        });
+            vdom.cn.push(itemConfig)
+        })
 
-        me.vdom = vdom;
+        me.vdom = vdom
 
         if (hasExamples) {
             setTimeout(() => {
-                Neo.main.addon.HighlightJS.syntaxHighlightInit();
-            }, 100);
+                Neo.main.addon.HighlightJS.syntaxHighlightInit()
+            }, 100)
         }
     }
 
@@ -350,111 +352,111 @@ class MembersList extends Base {
      * @returns {Object} vdom
      */
     static createParametersTable(params) {
-        let hasDefaultValues  = false,
+        let hasDefaultValues = false,
             hasOptionalParams = false,
-            description, nestedParams, paramTable;
+            description, nestedParams, paramTable
 
         params.forEach(param => {
             if (param.hasOwnProperty('defaultvalue')) {
-                hasDefaultValues = true;
+                hasDefaultValues = true
             }
 
             if (param.hasOwnProperty('optional')) {
-                hasOptionalParams = true;
+                hasOptionalParams = true
             }
-        });
+        })
 
         paramTable = {
             tag: 'table',
             cls: 'docs-param-table',
-            cn : [{
+            cn: [{
                 tag: 'thead',
-                cn : [{
-                    tag      : 'th',
+                cn: [{
+                    tag: 'th',
                     innerHTML: 'Name'
                 }, {
-                    tag      : 'th',
+                    tag: 'th',
                     innerHTML: 'Type'
                 }, {
-                    tag      : 'th',
+                    tag: 'th',
                     innerHTML: 'Description'
                 }]
             }]
-        };
+        }
 
         if (hasDefaultValues) {
             paramTable.cn[0].cn.splice(2, 0, {
-                tag      : 'th',
+                tag: 'th',
                 innerHTML: 'Default'
-            });
+            })
         }
 
         if (hasOptionalParams) {
             paramTable.cn[0].cn.splice(2, 0, {
-                tag      : 'th',
+                tag: 'th',
                 innerHTML: 'Optional'
-            });
+            })
         }
 
         params.forEach(param => {
             if (param.name.indexOf('.') < 0) { // ignore nested params
                 description = {
-                    tag      : 'td',
+                    tag: 'td',
                     innerHTML: param.description
-                };
-                nestedParams = [];
+                }
+                nestedParams = []
 
                 params.forEach(p => {
                     if (p.name.indexOf(param.name + '.') === 0) {
-                        p = Neo.clone(p, true);
+                        p = Neo.clone(p, true)
 
-                        p.name = p.name.split('.');
-                        p.name.shift();
-                        p.name = p.name.join('.');
+                        p.name = p.name.split('.')
+                        p.name.shift()
+                        p.name = p.name.join('.')
 
-                        nestedParams.push(p);
+                        nestedParams.push(p)
                     }
-                });
+                })
 
                 if (nestedParams.length > 0) {
                     description = {
                         tag: 'td',
-                        cn : [{
+                        cn: [{
                             innerHTML: description.innerHTML
                         },
-                        MembersList.createParametersTable(nestedParams)]
+                            MembersList.createParametersTable(nestedParams)]
                     }
                 }
 
                 paramTable.cn.push({
                     tag: 'tr',
-                    cn : [{
-                        tag      : 'td',
+                    cn: [{
+                        tag: 'td',
                         innerHTML: param.name
                     }, {
-                        tag      : 'td',
+                        tag: 'td',
                         innerHTML: param.type ? MembersList.escapeHtml(param.type.names.join(' | ')) : ''
                     },
-                    description]
-                });
+                        description]
+                })
 
                 if (hasDefaultValues) {
                     paramTable.cn[paramTable.cn.length - 1].cn.splice(2, 0, {
-                        tag      : 'td',
+                        tag: 'td',
                         innerHTML: param.defaultvalue === undefined ? '' : (param.defaultvalue + '')
-                    });
+                    })
                 }
 
                 if (hasOptionalParams) {
                     paramTable.cn[paramTable.cn.length - 1].cn.splice(2, 0, {
-                        tag      : 'td',
+                        tag: 'td',
                         innerHTML: param.optional
-                    });
+                    })
                 }
             }
-        });
+        })
 
-        return paramTable;
+        return paramTable
     }
 
     /**
@@ -463,156 +465,157 @@ class MembersList extends Base {
      * @returns {String}
      */
     static escapeHtml(value) {
-        return value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     }
 
     /**
      *
      */
     filterAndSortItems() {
-        let me             = this,
-            hierarchyMap   = {},
+        let me = this,
+            hierarchyMap = {},
             hierarchyStore = me.up('classdetails-maincontainer').down('classhierarchy-treelist').store,
             hierarchyItems = hierarchyStore.items,
-            i              = 0,
-            tmpItems       = [],
-            filters, tmpItemsLen;
+            i = 0,
+            tmpItems = [],
+            filters, tmpItemsLen
 
         hierarchyItems.forEach(cls => {
             if (cls.checked === true) {
-                tmpItems.push(cls.name);
+                tmpItems.push(cls.name)
             }
-        });
+        })
 
-        tmpItemsLen = tmpItems.length;
+        tmpItemsLen = tmpItems.length
 
         for (; i < tmpItemsLen; i++) {
-            hierarchyMap[tmpItems[i]] = i;
+            hierarchyMap[tmpItems[i]] = i
         }
 
-        me.targetClassName = hierarchyItems[hierarchyItems.length -1].name;
+        me.targetClassName = hierarchyItems[hierarchyItems.length - 1].name
 
         filters = [{
             operator: 'included',
             property: 'neoClassName',
-            value   : tmpItems
+            value: tmpItems
         }, {
             operator: '!==',
             property: 'kind',
-            value   : 'class'
+            value: 'class'
         }, {
             operator: '!==',
             property: 'kind',
-            value   : 'constant' // todo?
+            value: 'constant' // todo?
         }, {
             operator: '!==',
             property: 'kind',
-            value   : 'module'
+            value: 'module'
         }, {
             operator: 'isUndefined',
             property: 'inherited'
-        }];
+        }]
 
         if (!me.showPrivateMembers) {
             filters.push({
                 operator: '!==',
                 property: 'access',
-                value   : 'private'
-            });
+                value: 'private'
+            })
         }
 
         if (!me.showProtectedMembers) {
             filters.push({
                 operator: '!==',
                 property: 'access',
-                value   : 'protected'
-            });
+                value: 'protected'
+            })
         }
 
         if (!me.showStaticMembers) {
             filters.push({
                 operator: '!==',
                 property: 'scope',
-                value   : 'static'
-            });
+                value: 'static'
+            })
         }
 
         if (me.filterMembersQuery !== '' && me.filterMembersQuery !== null) {
             filters.push({
                 operator: 'like',
                 property: 'name',
-                value   : me.filterMembersQuery
-            });
+                value: me.filterMembersQuery
+            })
         }
 
         filters.push({
-            scope   : me,
-            filterBy: function(item, filteredItems, allItems) {
-                let me              = this,
+            scope: me,
+            filterBy: function (item, filteredItems, allItems) {
+                let me = this,
                     targetClassName = me.targetClassName,
-                    filteredItem, i, len;
+                    filteredItem, i, len
 
                 // always exclude inherited className & ntype configs
                 if (item.name === 'ntype' && item.neoClassName !== targetClassName
                 ) {
-                    return true;
+                    return true
                 }
 
                 if (item.neoClassName !== targetClassName) {
-                    i   = 0;
-                    len = filteredItems.length;
+                    i = 0
+                    len = filteredItems.length
 
                     for (; i < len; i++) {
-                        filteredItem = filteredItems[i];
+                        filteredItem = filteredItems[i]
 
                         if (item.id !== filteredItem.id) {
                             if (
-                                item.name  === filteredItem.name  &&
+                                item.name === filteredItem.name &&
                                 item.scope === filteredItem.scope && // static VS instance members
                                 hierarchyMap[item.neoClassName] < hierarchyMap[filteredItem.neoClassName]
                             ) {
-                                return true;
+                                return true
                             }
                         }
                     }
                 }
 
-                return false;
+                return false
             }
-        });
+        })
 
-        me.store.filters = filters;
+        me.store.filters = filters
 
         me.store.sorters = [{
             // Configs => Methods => Events
-            sortBy: function(a, b) {
-                a = a.kind === 'member' ? 0 : a.kind === 'function' ? 1 : 2;
-                b = b.kind === 'member' ? 0 : b.kind === 'function' ? 1 : 2;
+            sortBy: function (a, b) {
+                a = a.kind === 'member' ? 0 : a.kind === 'function' ? 1 : 2
+                b = b.kind === 'member' ? 0 : b.kind === 'function' ? 1 : 2
 
-                return a > b ? 1 : a < b ? -1 : 0;
+                return a > b ? 1 : a < b ? -1 : 0
             }
         }, {
             direction: 'ASC',
-            property : 'name'
-        }];
+            property: 'name'
+        }]
 
-        me.fire('mutateItems', me.store);
+        me.fire('mutateItems', me.store)
     }
 
     /**
      * Override to not call createItems() at this point => onRefreshClassMembers()
      */
-    onStoreFilter() {}
+    onStoreFilter() {
+    }
 
     /**
      *
      */
     onRefreshClassMembers() {
-        this.filterAndSortItems();
-        this.createItems();
+        this.filterAndSortItems()
+        this.createItems()
     }
 }
 
-Neo.applyClassConfig(MembersList);
+Neo.applyClassConfig(MembersList)
 
-export {MembersList as default};
+export { MembersList as default }

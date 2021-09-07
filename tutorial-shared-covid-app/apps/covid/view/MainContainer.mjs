@@ -1,46 +1,64 @@
-import Component    from '../../../node_modules/neo.mjs/src/component/Base.mjs';
-import TabContainer from '../../../node_modules/neo.mjs/src/tab/Container.mjs';
-import Viewport     from '../../../node_modules/neo.mjs/src/container/Viewport.mjs';
+import Viewport from '../../../node_modules/neo.mjs/src/container/Viewport.mjs'
+import {default as TabContainer} from '../../../node_modules/neo.mjs/src/tab/Container.mjs';
+
+import CountryTable from './country/Table.mjs';
+import HeaderContainer from './HeaderContainer.mjs'
+import MainContainerController from './MainContainerController.mjs'
+import FooterContainer from './FooterContainer.mjs'
 
 /**
  * @class Covid.view.MainContainer
  * @extends Neo.container.Viewport
  */
 class MainContainer extends Viewport {
-    static getConfig() {return {
-        className: 'Covid.view.MainContainer',
-        autoMount: true,
-        layout   : {ntype: 'fit'},
-
-        items: [{
-            module: TabContainer,
-            height: 300,
-            width : 500,
-            style : {flex: 'none', margin: '20px'},
-
-            itemDefaults: {
-                module: Component,
-                cls   : ['neo-examples-tab-component'],
-                style : {padding: '20px'},
+    static getConfig() {
+        return {
+            className: 'Covid.view.MainContainer',
+            autoMount: true,
+            controller: MainContainerController,
+            layout: {
+                ntype: 'vbox',
+                align: 'stretch'
             },
 
-            items: [{
-                tabButtonConfig: {
-                    iconCls: 'fa fa-home',
-                    text   : 'Tab 1'
+            itemDefaults: {
+                ntype: 'component'
+            },
+
+            items: [
+                { module: HeaderContainer, height: 120 },
+                {
+                    module: TabContainer,
+                    flex     : 1,
+                    reference: 'tab-container',
+                    style    : {margin: '10px', marginTop: 0},
+
+                    items: [{
+                        module   : CountryTable,
+                        reference: 'table-container',
+
+                        tabButtonConfig: {
+                            iconCls: 'fa fa-table',
+                            route  : 'mainview=table',
+                            text   : 'Table'
+                        }
+                    }, {
+                        ntype: 'component',
+                        html : 'Tab 2',
+
+                        tabButtonConfig: {
+                            iconCls: 'fa fa-dna',
+                            route  : 'mainview=helix',
+                            text   : 'Helix'
+                        }
+                    }]
                 },
-                vdom: {innerHTML: 'Welcome to your new Neo App.'}
-            }, {
-                tabButtonConfig: {
-                    iconCls: 'fa fa-play-circle',
-                    text   : 'Tab 2'
-                },
-                vdom: {innerHTML: 'Have fun creating something awesome!'}
-            }]
-        }]
-    }}
+                FooterContainer,
+            ]
+        }
+    }
 }
 
-Neo.applyClassConfig(MainContainer);
+Neo.applyClassConfig(MainContainer)
 
-export {MainContainer as default};
+export { MainContainer as default }

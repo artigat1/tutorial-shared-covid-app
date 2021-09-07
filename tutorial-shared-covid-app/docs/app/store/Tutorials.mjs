@@ -1,28 +1,30 @@
-import Store    from '../../../node_modules/neo.mjs/src/data/Store.mjs';
-import Tutorial from '../model/Tutorial.mjs';
+import Store from '../../../node_modules/neo.mjs/src/data/Store.mjs'
+import Tutorial from '../model/Tutorial.mjs'
 
 /**
  * @class Docs.app.store.Tutorials
  * @extends Neo.data.Store
  */
 class Tutorials extends Store {
-    static getConfig() {return {
-        /**
-         * @member {String} className='Docs.app.store.Tutorials'
-         * @protected
-         */
-        className: 'Docs.app.store.Tutorials',
-        /**
-         * @member {String} keyProperty='id'
-         */
-        keyProperty: 'id',
-        /**
-         * @member {Neo.data.Model} model=Tutorial
-         */
-        model: Tutorial
-    }}
+    static getConfig() {
+        return {
+            /**
+             * @member {String} className='Docs.app.store.Tutorials'
+             * @protected
+             */
+            className: 'Docs.app.store.Tutorials',
+            /**
+             * @member {String} keyProperty='id'
+             */
+            keyProperty: 'id',
+            /**
+             * @member {Neo.data.Model} model=Tutorial
+             */
+            model: Tutorial
+        }
+    }
 }
 
-Neo.applyClassConfig(Tutorials);
+Neo.applyClassConfig(Tutorials)
 
-export {Tutorials as default};
+export { Tutorials as default }
